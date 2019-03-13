@@ -1,8 +1,11 @@
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 public class Deck {
-    ArrayList<Card> cards;
+    Stack<Card> cards;
 
     public enum Suit {
         Hearts, Clubs, Spaces, Diamonds
@@ -12,7 +15,7 @@ public class Deck {
     }
 
     public Deck() {
-        cards = new ArrayList<Card>(52);
+        cards = new Stack<Card>();
         for (Suit s : Suit.values()) {
             for (Rank r : Rank.values()) {
                 cards.add(new Card(s, r));
@@ -22,5 +25,13 @@ public class Deck {
 
     public void Shuffle() {
         Collections.shuffle(cards);
+    }
+
+    public Card draw() {
+        if (cards.size() > 0) {
+            return cards.pop();
+        } else {
+            throw new NotImplementedException();
+        }
     }
 }
