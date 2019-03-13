@@ -7,4 +7,6 @@ public class Dealer extends Player{
     public void deal(Deck d, Player p) {
         p.hand.add(d.draw());
     }
+
+
 }

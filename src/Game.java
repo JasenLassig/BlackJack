@@ -1,13 +1,16 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Game {
     ArrayList<Player> players;
     Dealer dealer;
-    ArrayList<Deck> decks;
+    GameDeck deck;
+    Stack<Card> discardPile;
 
     public Game() {
         players = new ArrayList<Player>();
         dealer = new Dealer();
-        decks = new ArrayList<Deck>();
+        deck = new GameDeck(1);
+        discardPile = new Stack<Card>();
     }
 }
