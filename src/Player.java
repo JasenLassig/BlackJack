@@ -3,10 +3,12 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class Player {
     Hand hand;
     Double wallet;
+    String name;
 
-    public Player() {
+    public Player(String n) {
         hand = new Hand();
         wallet = 0.0;
+        name = n;
     }
 
     public double bet(double bet) {

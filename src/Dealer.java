@@ -1,7 +1,7 @@
 public class Dealer extends Player{
 
     public Dealer() {
-        super();
+        super("Dealer");
     }
 
     public void deal(Deck d, Player p) {

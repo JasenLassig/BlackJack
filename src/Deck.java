@@ -23,8 +23,16 @@ public class Deck {
         }
     }
 
+    public void empty() {
+        cards = new Stack<Card>();
+    }
+
     public void Shuffle() {
         Collections.shuffle(cards);
+    }
+
+    public boolean add(Card c) {
+        return cards.add(c);
     }
 
     public Card draw() {
