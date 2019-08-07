@@ -9,7 +9,6 @@ public class BlackJack extends Game {
         }
         dealer = new Dealer();
         deck = new GameDeck(decks);
-        cardValues();
         discardPile = new Stack<Card>();
         runGame();
     }
@@ -51,42 +50,83 @@ public class BlackJack extends Game {
                 }
             }
             // deal first round of cards
-            players.forEach(p -> dealer.deal(deck, p));
+            for (Player p : players) {
+                dealer.deal(deck, p);
+            }
             dealer.deal(deck, dealer);
 
             // ask each player for action until done
+            turn:
             for (Player p : players) {
-                System.out.println();
+                int handValue = calculateHand(p);
+                while (handValue < 21) {
+                    System.out.println("You have: " + handValue + ".");
+                    System.out.println("What would you like to do? H: hit, S: stand, X: split, R: surrender, D: double down");
+                    String action = sc.nextLine();
+                    action = action.toLowerCase();
+                    switch (action) {
+                        case "h":
+                            dealer.deal(deck, p);
+                            break;
+                        case "s":
+                            continue turn;
+                        case "x":
+                            // TODO: implement
+                            break;
+                        case "r":
+                            // TODO: implement
+                            break;
+                        case "d":
+                            // TODO: implement
+                            break;
+                        default:
+                            System.out.println("Error: please choose a valid action.");
+                            break;
+                    }
+                }
+                handValue = calculateHand(p);
+                if (handValue > 21) {
+                    System.out.println("Dang! You went bust with a " + handValue + ".");
+                }
             }
-            // deal out winnings
+            // TODO: dealer turn (stand on soft 17)
+
+            // TODO: deal out winnings
         }
 
     }
     // calculate the hand value
     private int calculateHand (Player p) {
-        Map<String, Integer> values = cardValues();
         int handValue = 0;
+        int numAces = 0;
         for (Card c : p.hand) {
-            handValue += values.get(c.getRank());
+            if (c.getRank().equals("Ace")) {
+                numAces++;
+            }
+            handValue += cardValue(c);
+        }
+        // handle aces by switching their values to 1 until the total is below 21
+        for (int i = 0; handValue > 21 && i < numAces; i++) {
+            handValue -= 10;
         }
         return handValue;
     }
 
-    private Map<String, Integer> cardValues() {
-        Map<String, Integer> values = new HashMap<String, Integer>();
-        values.add("Ace", 11);
-        values.add("Two", 2);
-        values.add("Three", 3);
-        values.add("Four", 4);
-        values.add("Five", 5);
-        values.add("Six", 6);
-        values.add("Seven", 7);
-        values.add("Eight", 8);
-        values.add("Nine", 9);
-        values.add("Ten", 10);
-        values.add("Jack", 10);
-        values.add("Queen", 10);
-        values.add("King", 10);
-        return values;
+    private int cardValue(Card c) {
+        HashMap<String, Integer> values = new HashMap<String, Integer>();
+        values.put("Ace", 11);
+        values.put("Two", 2);
+        values.put("Three", 3);
+        values.put("Four", 4);
+        values.put("Five", 5);
+        values.put("Six", 6);
+        values.put("Seven", 7);
+        values.put("Eight", 8);
+        values.put("Nine", 9);
+        values.put("Ten", 10);
+        values.put("Jack", 10);
+        values.put("Queen", 10);
+        values.put("King", 10);
+        return values.get(c.getRank());
     }
 }
