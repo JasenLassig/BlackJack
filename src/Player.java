@@ -11,12 +11,12 @@ public class Player {
         name = n;
     }
 
-    public double bet(double bet) {
-        if (bet > wallet) {
-            throw new NotImplementedException();
-        } else {
-            return wallet -= bet;
+    public boolean bet(double bet) {
+        if (bet < wallet) {
+            wallet -= bet;
+            return true;
         }
+        return false;
     }
 
     public double won(double winnings) {

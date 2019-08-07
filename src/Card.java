@@ -6,4 +6,12 @@ public class Card {
         suit = s;
         rank = r;
     }
+
+    public String getRank() {
+        return rank.toString();
+    }
+
+    public String getSuit() {
+        return suit.toString();
+    }
 }
