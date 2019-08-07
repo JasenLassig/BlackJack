@@ -1,3 +1,4 @@
+import javax.sound.midi.SysexMessage;
 import java.util.*;
 
 public class BlackJack extends Game {
@@ -51,7 +52,8 @@ public class BlackJack extends Game {
             }
             // deal first round of cards
             for (Player p : players) {
-                dealer.deal(deck, p);
+                Card temp = dealer.deal(deck, p);
+                System.out.println(p.name + ": " + temp.toString());
             }
             dealer.deal(deck, dealer);
 
